@@ -49,7 +49,6 @@ def create_bank():
 @app.route('/bankupdate/<id>', methods=['PUT'])
 def update_bank(id):
     # Getting values
-    bank_name = request.json["bankname"]
     pan_number = request.json['pannumber']
     license_number = request.json['licensenumber']
     mobile_no = request.json['mobileno']
@@ -60,10 +59,10 @@ def update_bank(id):
     registered_acc_id = request.json['registeredaccountid']
 
     # validate the received values
-    if bank_name and pan_number and license_number and mobile_no and email and ssi_number and gst_number \
+    if pan_number and license_number and mobile_no and email and ssi_number and gst_number \
             and tin_number and registered_acc_id and request.method == 'PUT':
         # save edits
-        BankRegister.objects.filter(bank_id=id).update(bank_name=bank_name, pan_number=pan_number, mobile_no=mobile_no,
+        BankRegister.objects.filter(bank_id=id).update( pan_number=pan_number, mobile_no=mobile_no,
                                               license_number=license_number,
                                               email=email, ssi_number=ssi_number, gst_number=gst_number,tin_number=tin_number,registered_acc_id=registered_acc_id)
         resp = jsonify('Bank updated successfully!')
@@ -199,7 +198,7 @@ def bankdetails_list():
 @app.route('/deletebankdetails/<id>', methods=['DELETE'])
 def delete_bankdetails(id):
     # query to select the bankdetails
-    result=BankDetails.objects.get(bank_id=id)
+    result=BankDetails.objects.get(id=id)
     # delete the selected bankdetails
     result.delete()
     resp = jsonify('Bank Details deleted successfully!')

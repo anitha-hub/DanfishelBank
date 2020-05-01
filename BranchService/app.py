@@ -51,8 +51,7 @@ def create_branchdetails():
 @app.route('/branchdetailsupdate/<id>', methods=['PUT'])
 def update_bank(id):
     # Getting values
-    branch_name = request.json["branchname"]
-    bank_id = request.json["bankid"]
+
     address1 = request.json["address1"]
     address2 = request.json['address2']
     city = request.json['city']
@@ -63,11 +62,11 @@ def update_bank(id):
     specificationId = request.json['specid']
 
     # validate the received values
-    if branch_name and address1 and address2 and city and state and country and \
+    if address1 and address2 and city and state and country and \
             phone_no1 and phone_no2 and specificationId and request.method == 'PUT':
         # save edits
         #update query
-        BranchDetails.objects.filter(branch_id=id).update(bank_id=bank_id,branch_name=branch_name,address1=address1, address2=address2, city=city,
+        BranchDetails.objects.filter(branch_id=id).update(address1=address1, address2=address2, city=city,
                                               state=state,country=country, phone_no1=phone_no1, phone_no2=phone_no2,specification_id=specificationId)
         resp = jsonify('Bank Details updated successfully!')
         return resp
@@ -146,24 +145,24 @@ def create_branchspec():
     else:
         abort(400)  # missing arguments
 
-@app.route('/branchspec-update/<id>', methods=['PUT'])
-def update_branchspec(id):
-    # Getting values
-    ifsccode = request.json["ifsccode"]
-    micrcode = request.json['micrcode']
-
-    # validate the received values
-    if ifsccode and micrcode  and request.method == 'PUT':
-        # save edits
-        BranchSpecification.objects.filter(id=id).update(ifsc_code=ifsccode, micr_code=micrcode)
-        resp = jsonify('Branch Specification updated successfully!')
-        return resp
+# @app.route('/branchspec-update/<id>', methods=['PUT'])
+# def update_branchspec(id):
+#     # Getting values
+#     ifsccode = request.json["ifsccode"]
+#     micrcode = request.json['micrcode']
+#
+#     # validate the received values
+#     if ifsccode and micrcode  and request.method == 'PUT':
+#         # save edits
+#         BranchSpecification.objects.filter(branch_id=id).update(ifsc_code=ifsccode, micr_code=micrcode)
+#         resp = jsonify('Branch Specification updated successfully!')
+#         return resp
 
 
 @app.route('/branchspec-details/<id>', methods=['GET'])
 def getbranchspec(id):
     # query to select one branch with the branchspecification id
-    user = BranchSpecification.objects.get(id=id)
+    user = BranchSpecification.objects.get(branch_id=id)
     return user.to_json()
 
 @app.route('/allbranchspec-details', methods=['GET'])
