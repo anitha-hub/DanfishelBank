@@ -7,11 +7,11 @@ ENV PYTHONUNBUFFERED 1
 COPY ./requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt
 
-RUN mkdir /BankService
-WORKDIR /BankService
-COPY . /BankService
+RUN mkdir /BranchService
+WORKDIR /BranchService
+COPY . /BranchService
 
-EXPOSE 5001
+EXPOSE 5002
 
 ENTRYPOINT [ "python" ]
 CMD [ "app.py" ]
