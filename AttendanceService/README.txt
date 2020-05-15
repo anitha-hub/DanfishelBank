@@ -315,3 +315,98 @@ http://0.0.0.0:5003/logout
 }
 
 -----------------------------------------------------------------------------------------
+POST  http://0.0.0.0:5003/employee-attendance
+input:
+{
+        "empdetails_id" : "5eb6e6d00f3b2b7392c1c577",
+        "workdays":"30",
+        "actualdays":"28",
+        "work_hours":"79",
+        "paid_leave" : "4",
+        "permissions":"4"
+}
+output:
+{
+  "message": "Employee Attendance Created successfully"
+}
+---------------------------------------------------------------------------------------
+PUT http://0.0.0.0:5003/update-employeattendance/5eb6e6d00f3b2b7392c1c577
+input:
+{
+        "workdays":"25",
+        "actualdays":"31",
+        "work_hours":"79",
+        "paid_leave" : "4",
+        "permissions":"4"
+}
+output:
+
+"Employee Attendance updated successfully!"
+------------------------------------------------------------------------------------------
+GET http://0.0.0.0:5003/employeeattendance/5eb6e6d00f3b2b7392c1c577
+
+{
+  "Actual Days in Month": 31,
+  "Employee Details Id": {
+    "_id": {
+      "$oid": "5eb6e6d00f3b2b7392c1c577"
+    },
+    "address": "Dubai",
+    "branch_id": "per789",
+    "designation": "Teller",
+    "dob": {
+      "$date": 1342483200000
+    },
+    "email": "asmitha@gmail.com",
+    "emp_role_id": {
+      "$oid": "5eb6a92541246004f42b9265"
+    },
+    "employee_id": "1",
+    "first_name": "Asmitha",
+    "is_active": true,
+    "last_name": "T",
+    "localization_id": 87131,
+    "mobile_one": 9887658765,
+    "mobile_two": 9866632456,
+    "title": "hghjfg"
+  },
+  "Paid Leave": 4,
+  "Permissions": 4,
+  "Work Hours": 79,
+  "WorkDays in Month": 25,
+  "_id": "5eb6f8289e4ceafa27c5c251"
+}
+-----------------------------------------------------------------------------------
+GET http://0.0.0.0:5003/allemployeesattendance
+{
+  "Actual Days in Month": 31,
+  "Employee Details Id": {
+    "_id": {
+      "$oid": "5eb6e6d00f3b2b7392c1c577"
+    },
+    "address": "Dubai",
+    "branch_id": "per789",
+    "designation": "Teller",
+    "dob": {
+      "$date": 1342483200000
+    },
+    "email": "asmitha@gmail.com",
+    "emp_role_id": {
+      "$oid": "5eb6a92541246004f42b9265"
+    },
+    "employee_id": "1",
+    "first_name": "Asmitha",
+    "is_active": true,
+    "last_name": "T",
+    "localization_id": 87131,
+    "mobile_one": 9887658765,
+    "mobile_two": 9866632456,
+    "title": "hghjfg"
+  },
+  "Paid Leave": 4,
+  "Permissions": 4,
+  "Work Hours": 79,
+  "WorkDays in Month": 25,
+  "_id": "5eb6f8289e4ceafa27c5c251"
+}
+------------------------------------------------------------------------------------------------

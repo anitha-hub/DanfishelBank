@@ -75,7 +75,7 @@ class EmployeeDetails(Document):
         }
 
 class EmployeeAuth(Document):
-    username=StringField()
+    username=StringField(unique=True)
     password=StringField()
     token=StringField()
     public_id = StringField()
@@ -91,24 +91,7 @@ class EmployeeLogs(Document):
     total_attempts=IntField()
     err_log=StringField()
 
-class EmployeeAttendance(Document):
-    emp_details_id=ReferenceField(EmployeeDetails)
-    workdays_month=IntField()
-    actual_days_month=IntField()
-    work_hours=IntField()
-    paid_leave=IntField()
-    permissions=IntField()
 
-    def to_json(self):
-        return {
-            "_id": str(self.pk),
-            "Employee Details Id": self.emp_details_id,
-            "WorkDays in Month": self.workdays_month,
-            "Actual Days in Month": self.actual_days_month,
-            "Work Hours": self.work_hours,
-            "Paid Leave": self.paid_leave,
-            "Permissions": self.permissions
-        }
 
 
 

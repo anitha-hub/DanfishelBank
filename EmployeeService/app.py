@@ -6,7 +6,7 @@ from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 import uuid
 import jwt
-from EmployeeService.models import EmployeeDetails, TransactionLimit, EmployeeRole, EmployeeAttendance, EmployeeAuth, \
+from EmployeeService.models import EmployeeDetails, TransactionLimit, EmployeeRole, EmployeeAuth, \
     EmployeeLogs
 
 
@@ -240,61 +240,6 @@ def logoutEmployee():
     session.pop('username',None)
     return (jsonify({'message': 'Successfully Logged Out'}))
 
-@app.route('/employee-attendance', methods=['POST'])
-def create_employeeattendance():
-    #Getting values
-    empdetails_id=request.json['empdetails_id']
-    workdays = request.json["workdays"]
-    actualdays = request.json["actualdays"]
-    work_hours = request.json["work_hours"]
-    paid_leave = request.json['paid_leave']
-    permissions = request.json['permissions']
-
-
-    #validates the received values.
-    if empdetails_id and workdays and actualdays and work_hours and paid_leave and permissions and request.method == 'POST':
-            #query to insert the employee attendance details
-            emp_attendance = EmployeeAttendance.objects.create(emp_details_id=empdetails_id,workdays_month=workdays,actual_days_month=actualdays,
-                                                      work_hours=work_hours, paid_leave=paid_leave, permissions=permissions)
-
-            emp_attendance.save()
-            return (jsonify({'message': 'Employee Attendance Created successfully'}))
-
-    else:
-        abort(400)  # missing arguments
-
-
-@app.route('/update-employeattendance/<id>', methods=['PUT'])
-def update_employeeattendance(id):
-    # Getting values
-    workdays = request.json["workdays"]
-    actualdays = request.json["actualdays"]
-    work_hours = request.json["work_hours"]
-    paid_leave = request.json['paid_leave']
-    permissions = request.json['permissions']
-    # validate the received values
-    if workdays and actualdays and work_hours and paid_leave and permissions and request.method == 'PUT':
-        # save edits
-        EmployeeAttendance.objects.filter(emp_details_id=id).update(workdays_month=workdays,actual_days_month=actualdays,
-                                                      work_hours=work_hours, paid_leave=paid_leave, permissions=permissions)
-        resp = jsonify('Employee Attendance updated successfully!')
-        return resp
-
-@app.route('/employeeattendance/<id>', methods=['GET'])
-def getemployeeattendance(id):
-    # query to select one employee attendance for the employee d
-    user = EmployeeAttendance.objects.get(emp_details_id=id)
-    return user.to_json()
-
-
-@app.route('/allemployeesattendance', methods=['GET'])
-def all_employees_attendance_list():
-    # query to select all values from database
-    resp = EmployeeAttendance.objects.all()
-    result = []
-    for u in resp:
-        result.append(u.to_json())
-    return jsonify({'Employee Details': result})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5003, debug=True)
